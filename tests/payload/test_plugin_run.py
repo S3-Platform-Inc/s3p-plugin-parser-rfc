@@ -1,5 +1,6 @@
 import datetime
 import importlib.util
+import logging.config
 import os
 from typing import Type
 import sys
@@ -13,7 +14,7 @@ from selenium.webdriver import Chrome
 from selenium.webdriver.ie.webdriver import WebDriver
 
 from tests.config.fixtures import fix_plugin_config, project_config
-from tests.payload.fixtures import execute_timeout
+# from tests.payload.fixtures import execute_timeout
 from s3p_sdk.types import S3PRefer, S3PDocument
 from s3p_sdk.plugin.types import SOURCE
 
@@ -59,11 +60,12 @@ class TestPayloadRun:
     def run_payload(self, payload: Type[S3PParserBase], driver: WebDriver, refer: S3PRefer, max_document: int,
                     timeout: int = 2):
         # !WARNING Требуется изменить путь до актуального парсера плагина
-        from src.s3_platform_plugin_template.template_payload import MyTemplateParser
-        if isinstance(payload, type(MyTemplateParser)):
+        logging.config.fileConfig('../dev.logger.conf')
+        from src.s3p_plugin_parser_rfc.rfc import RFC
+        if isinstance(payload, type(RFC)):
             _payload = payload(refer=refer, web_driver=driver, max_count_documents=max_document, last_document=None)
 
-            @execute_timeout(timeout)
+            # @execute_timeout(timeout)
             def execute() -> tuple[S3PDocument, ...]:
                 return _payload.content()
 
@@ -75,7 +77,8 @@ class TestPayloadRun:
         # !WARNING Обновить тест для актуального парсера
         max_docs = 10
         docs = self.run_payload(fix_payload, chrome_driver, fix_s3pRefer, max_docs)
-        assert len(docs) <= max_docs
+        # print(docs)
+        assert len(docs) == max_docs
 
     def test_return_types(self, chrome_driver, fix_s3pRefer, fix_payload):
         # !WARNING Обновить тест для актуального парсера
