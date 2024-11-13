@@ -60,7 +60,7 @@ class TestPayloadRun:
     def run_payload(self, payload: Type[S3PParserBase], driver: WebDriver, refer: S3PRefer, max_document: int,
                     timeout: int = 2):
         # !WARNING Требуется изменить путь до актуального парсера плагина
-        logging.config.fileConfig('../dev.logger.conf')
+        # logging.config.fileConfig('../dev.logger.conf')
         from src.s3p_plugin_parser_rfc.rfc import RFC
         if isinstance(payload, type(RFC)):
             _payload = payload(refer=refer, web_driver=driver, max_count_documents=max_document, last_document=None)
