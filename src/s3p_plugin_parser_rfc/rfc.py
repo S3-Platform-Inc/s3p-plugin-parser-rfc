@@ -2,7 +2,7 @@ import datetime
 import time
 
 from s3p_sdk.plugin.payloads.parsers import S3PParserBase
-from s3p_sdk.types import S3PRefer, S3PDocument
+from s3p_sdk.types import S3PRefer, S3PDocument, S3PPlugin
 from selenium.common import NoSuchElementException
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
@@ -24,9 +24,9 @@ class RFC(S3PParserBase):
 
     HOST = "https://www.rfc-editor.org/rfc/"
 
-    def __init__(self, refer: S3PRefer, web_driver: WebDriver, max_count_documents: int = None,
+    def __init__(self, refer: S3PRefer, plugin: S3PPlugin, web_driver: WebDriver, max_count_documents: int = None,
                  last_document: S3PDocument = None):
-        super().__init__(refer, max_count_documents, last_document)
+        super().__init__(refer, plugin, max_count_documents, last_document)
 
         # Тут должны быть инициализированы свойства, характерные для этого парсера. Например: WebDriver
         self._driver = web_driver
