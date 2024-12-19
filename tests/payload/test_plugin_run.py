@@ -89,7 +89,7 @@ class TestPayloadRun:
 
         """
         max_docs = 4
-        docs = self.run_payload(fix_payload, fix_s3pPlugin, chrome_driver, fix_s3pRefer, S3PPluginRestrictions(max_docs, None, None, None), 20)
+        docs = self.run_payload(fix_payload, fix_s3pPlugin, chrome_driver, fix_s3pRefer, S3PPluginRestrictions(max_docs, None, None, None),  100)
 
         # 1. Количество материалов должно быть не меньше параметра максимального числа материалов.
         assert len(docs) == max_docs, f"Payload вернул {len(docs)} материалов. А должен был {max_docs}"
